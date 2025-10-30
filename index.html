@@ -1,160 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de produccion</title>
-    <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f5f5f5;
-      color: #333;
-    }
-    h2 {
-      color: #004d99;
-    }
-    table {
-      border-collapse: collapse;
-      width: 70%;
-      margin-top: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    th, td {
-      border: 1px solid #999;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #004d99;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #e6f0ff;
-    }
-    tr:nth-child(odd) {
-      background-color: #ffffff;
-    }
-    .bajo {
-      color: red;
-      font-weight: bold;
-    }
-    .medio {
-      color: orange;
-      font-weight: bold;
-    }
-    .alto {
-      color: green;
-      font-weight: bold;
-    }
-  </style>
-
-
-</head>
-
-
-<body>
- <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Producción de Piezas</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f5f5f5;
-      color: #333;
-    }
-    h2 {
-      color: #004d99;
-    }
-    table {
-      border-collapse: collapse;
-      width: 70%;
-      margin-top: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    th, td {
-      border: 1px solid #999;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #004d99;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #e6f0ff;
-    }
-    tr:nth-child(odd) {
-      background-color: #ffffff;
-    }
-    .bajo {
-      color: red;
-      font-weight: bold;
-    }
-    .medio {
-      color: orange;
-      font-weight: bold;
-    }
-    .alto {
-      color: green;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Producción de Piezas</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; color: #333; }
+h2 { color: #004d99; }
+table { border-collapse: collapse; width: 70%; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+th, td { border: 1px solid #999; padding: 10px; text-align: center; }
+th { background-color: #004d99; color: white; }
+tr:nth-child(even) { background-color: #e6f0ff; }
+tr:nth-child(odd) { background-color: #ffffff; }
+.bajo { color: red; font-weight: bold; }
+.medio { color: orange; font-weight: bold; }
+.alto { color: green; font-weight: bold; }
+</style>
 </head>
 <body>
 <script>
 let nombredeloperario = prompt("Ingrese su nombre por favor");
-let tipodeproducto = prompt("Ingrese el tipo de producto que va a elaborar (A, B o C)");
-let nombredelproducto;
-let costoUnitario;
 
-switch (tipodeproducto.toUpperCase()) {
-  case 'A':
-    costoUnitario = 5000;
-    nombredelproducto = "Producto A";
-    break;
-  case 'B':
-    costoUnitario = 7000;
-    nombredelproducto = "Producto B";
-    break;
-  case 'C':
-    costoUnitario = 10000;
-    nombredelproducto = "Producto C";
-    break;
-  default:
-    alert("Tipo de producto no válido. Por favor ingrese A, B o C.");
-    throw new Error("Tipo de producto no válido");
+
+const costosComponentes = {
+  "A": 5000,
+  "B": 7000,
+  "C": 10000
+};
+
+let tipodeproducto = prompt("Ingrese el tipo de producto que va a elaborar (A, B o C)").toUpperCase();
+let nombredelproducto;
+switch (tipodeproducto) {
+  case 'A': nombredelproducto = "Producto A"; break;
+  case 'B': nombredelproducto = "Producto B"; break;
+  case 'C': nombredelproducto = "Producto C"; break;
+  default: alert("Tipo de producto no válido"); throw new Error("Tipo de producto no válido");
 }
 
 let totaldepiezas = 0;
+let totalcosto = 0;
 let dia = 1;
 let continuar = true;
 let produccion = [];
 
 while (continuar) {
   let piezasDiarias = parseInt(prompt(`Ingrese la cantidad de piezas producidas en el día ${dia}:`));
-  if (isNaN(piezasDiarias) || piezasDiarias < 0) {
-    alert("Por favor ingrese un número válido de piezas.");
-    continue;
-  }
+  if (isNaN(piezasDiarias) || piezasDiarias < 0) { alert("Número inválido"); continue; }
 
   let componente;
 
   if (dia === 1) {
- 
-    switch (tipodeproducto.toUpperCase()) {
+   
+    switch (tipodeproducto) {
       case 'A': componente = "Componente A"; break;
       case 'B': componente = "Componente B"; break;
       case 'C': componente = "Componente C"; break;
       default: componente = "No especificado";
     }
   } else {
-    let opcion = parseInt(prompt(
-      `Seleccione el componente trabajado en el día ${dia}:\n1 - Componente A\n2 - Componente B\n3 - Componente C`
-    ));
+    let opcion = parseInt(prompt(`Seleccione el componente trabajado en el día ${dia}:\n1 - Componente A\n2 - Componente B\n3 - Componente C`));
     switch (opcion) {
       case 1: componente = "Componente A"; break;
       case 2: componente = "Componente B"; break;
@@ -163,63 +66,51 @@ while (continuar) {
     }
   }
 
+
+  let costoUnitario = 0;
+  if (componente === "Componente A") costoUnitario = costosComponentes["A"];
+  else if (componente === "Componente B") costoUnitario = costosComponentes["B"];
+  else if (componente === "Componente C") costoUnitario = costosComponentes["C"];
+
+  let costoDiario = piezasDiarias * costoUnitario;
+
   totaldepiezas += piezasDiarias;
-  produccion.push({ dia, piezas: piezasDiarias, componente });
+  totalcosto += costoDiario;
+
+  produccion.push({ dia, piezas: piezasDiarias, componente, costoUnitario, costoDiario });
 
   let respuesta = prompt("¿Desea ingresar la producción de otro día? (si/no)").toLowerCase();
-  if (respuesta === 'si') {
-    dia++;
-  } else {
-    continuar = false;
-  }
+  if (respuesta === 'si') dia++; else continuar = false;
 }
 
-
-let costoTotal = totaldepiezas * costoUnitario;
-let rendimiento;
-let claseRendimiento;
-
-if (totaldepiezas < 50) {
-  rendimiento = "Bajo Rendimiento";
-  claseRendimiento = "bajo";
-} else if (totaldepiezas <= 100) {
-  rendimiento = "Rendimiento Aceptable";
-  claseRendimiento = "medio";
-} else {
-  rendimiento = "Rendimiento Excelente";
-  claseRendimiento = "alto";
-}
-
+let rendimiento, claseRendimiento;
+if (totaldepiezas < 50) { rendimiento = "Bajo Rendimiento"; claseRendimiento = "bajo"; }
+else if (totaldepiezas <= 100) { rendimiento = "Rendimiento Aceptable"; claseRendimiento = "medio"; }
+else { rendimiento = "Rendimiento Excelente"; claseRendimiento = "alto"; }
 
 document.write(`<h2>Resumen de Producción</h2>`);
 document.write(`<p><b>Operario:</b> ${nombredeloperario}</p>`);
 document.write(`<p><b>Producto:</b> ${nombredelproducto}</p>`);
 
-document.write(`
-<table>
-  <tr>
-    <th>Día</th>
-    <th>Piezas Producidas</th>
-    <th>Componente</th>
-  </tr>
-`);
+document.write(`<table>
+<tr><th>Día</th><th>Piezas</th><th>Componente</th><th>Costo Unitario</th><th>Costo Diario</th></tr>`);
 
-for (let i = 0; i < produccion.length; i++) {
-  document.write(`
-    <tr>
-      <td>${produccion[i].dia}</td>
-      <td>${produccion[i].piezas}</td>
-      <td>${produccion[i].componente}</td>
-    </tr>
-  `);
-}
+produccion.forEach(d => {
+  document.write(`<tr>
+    <td>${d.dia}</td>
+    <td>${d.piezas}</td>
+    <td>${d.componente}</td>
+    <td>$${d.costoUnitario.toFixed(2)}</td>
+    <td>$${d.costoDiario.toFixed(2)}</td>
+  </tr>`);
+});
 
 document.write(`</table><br>`);
 document.write(`<p><b>Total de Piezas:</b> ${totaldepiezas}</p>`);
-document.write(`<p><b>Costo Unitario:</b> $${costoUnitario.toFixed(2)}</p>`);
-document.write(`<p><b>Costo Total:</b> $${costoTotal.toFixed(2)}</p>`);
+document.write(`<p><b>Costo Total de Producción:</b> $${totalcosto.toFixed(2)}</p>`);
 document.write(`<p class="${claseRendimiento}"><b>Rendimiento:</b> ${rendimiento}</p>`);
 </script>
 </body>
 </html>
+
 
